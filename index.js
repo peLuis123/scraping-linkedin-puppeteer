@@ -51,7 +51,7 @@ const puppeteer = require('puppeteer');//importamos puppeteer
         await page.waitForSelector('#experience')//en este caso esperamos a que cargue la experiencia si no, nos funcionara 
         const info = await page.evaluate(() => {
             const tmp = {};
-            tmp.name = 'h1';
+            tmp.name = document.querySelector('h1').innerText;
             tmp.education = document.querySelector('#education ~ .pvs-list__outer-container > ul > li').innerText;//se extrae el texto de cada educacion
             tmp.experience =  document.querySelector('#experience ~ .pvs-list__outer-container > ul > li').innerText;//se extrae la informacion de experiencia 
             return tmp;
