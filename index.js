@@ -19,9 +19,9 @@ const puppeteer = require('puppeteer');//importamos puppeteer
     //en caso de que la pagina no se cargue correctamente borrar la parte de la linea 10 el atributo de args:[] y poner fullscreem manualmente
     //await page.waitForNavigation({timeout: '5000' });
     await page.waitForSelector("#session_key");//estos waitForSelector nos van ayudar a esperar los cuadros donde vamos a ingresar el correo automaticamente
-    await page.type("#session_key", "pedrorc2018@gmail.com", { delay: 100 });//ingresamos el correo y le ponemos un delay de 100 para que la computadora no crea que eres un bot esto lo puse para que no nos banee por tantos intentos 
+    await page.type("#session_key", "ingresar_correo", { delay: 100 });//ingresamos el correo y le ponemos un delay de 100 para que la computadora no crea que eres un bot esto lo puse para que no nos banee por tantos intentos 
     await page.waitForSelector("#session_password");//bueno en esta parte se ingresa el correo no mandare mi correo presisamente pero para probarlo se necesita un correo y una contraseña valida
-    await page.type("#session_password", "77078967", { delay: 100 });//de la misma manera como hicimos con el correo hacemos para la contraseña 
+    await page.type("#session_password", "ingresar_contraseña", { delay: 100 });//de la misma manera como hicimos con el correo hacemos para la contraseña 
     await page.click(".sign-in-form__submit-button");//aqui mandamos una funcion de clic al boton ingresar o tambien se le puede mandar una funcion de enter funciona de igual manera
     await page.waitForSelector("#global-nav-typeahead > input");//aqui esperemos que cargue la pagina principal no toda solamente aremos uso de su buscador pero para esto necesitamos que su buscador este desplegado encaso no lo este no funcionara el programa
     await page.type("#global-nav-typeahead > input", "developer", { delay: 300 });//una vez ahya cargado solamente mandamos lo que queremos buscar en este caso developer se puede cambiar en este lugar 
@@ -65,3 +65,6 @@ const puppeteer = require('puppeteer');//importamos puppeteer
     //para poder extraer la informacion  de los siguiente perfiles pienso que en la parte de links deberia de simular mas cliks en cada boton de la paginacion y extraer todos los links solo se cambiaria en ese lugar
     //por que despues los links quedarian almacenamos en el array links y con la siguiente funcion se puede entrar a todos los urls extraidos y escrapear todo  
 })();
+//asi es como funciona borrare mi correo y mi contraseña para subirlo al github
+
+//se scrapeo todos los perfiles de los 10 perfiles se scrapeo los 10 ... gracias 
