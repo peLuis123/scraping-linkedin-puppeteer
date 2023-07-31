@@ -1,13 +1,13 @@
-//para el primer reto de escraping no lo pude hacer como se solicito por que la verdad no me salia la parte del 
-//csrf-token no me salia por lo cual para darle solucion al problema si bien fue de manera improvisada al 
+//para el primer reto de escraping no lo pude hacer como se solicito por que la verdad no me salia la parte del
+//csrf-token no me salia por lo cual para darle solucion al problema si bien fue de manera improvisada al
 //menos trate de hacerlo con los conocimientos que se aprendieron en clase, y lo ise con puppeteer
 //tal vez lo que ise sea una mala practica ya que necesitas credenciales reales de un usuario para poder acceder
-//a linkedin pero bueno funciona  
+//a linkedin pero bueno funciona
 
 const puppeteer = require('puppeteer');//importamos puppeteer
-(async () => { 
+(async () => {
     const query = "developer" //esta variable se creo inicialmente para poder mandar un query de busqueda se puede crear un frm en html y enviar la variable para buscar bueno por falta de tiempo no lo implemente
-    const browser = await puppeteer.launch({ 
+    const browser = await puppeteer.launch({
         headless: false,
         args:[
             '--start-maximized' // you can also use '--start-fullscreen'
@@ -15,16 +15,16 @@ const puppeteer = require('puppeteer');//importamos puppeteer
 
     const page = await browser.newPage();//se apertura una nueva pestaña
     await page.goto("https://www.linkedin.com/"); //en este caso estamos mandando como referencia el inicio de sesion de linkedin
-    await page.setViewport({width: 1366, height: 768})//bueno esta parte no me salio muy bien queria ponerle parametros para fullscreem
+    // await page.setViewport({ width: 1920, height: 1080 });//bueno esta parte no me salio muy bien queria ponerle parametros para fullscreem
     //en caso de que la pagina no se cargue correctamente borrar la parte de la linea 10 el atributo de args:[] y poner fullscreem manualmente
     //await page.waitForNavigation({timeout: '5000' });
     await page.waitForSelector("#session_key");//estos waitForSelector nos van ayudar a esperar los cuadros donde vamos a ingresar el correo automaticamente
-    await page.type("#session_key", "ingresar_correo", { delay: 100 });//ingresamos el correo y le ponemos un delay de 100 para que la computadora no crea que eres un bot esto lo puse para que no nos banee por tantos intentos 
+    await page.type("#session_key", "ingresar_correo", { delay: 100 });//ingresamos el correo y le ponemos un delay de 100 para que la computadora no crea que eres un bot esto lo puse para que no nos banee por tantos intentos
     await page.waitForSelector("#session_password");//bueno en esta parte se ingresa el correo no mandare mi correo presisamente pero para probarlo se necesita un correo y una contraseña valida
-    await page.type("#session_password", "ingresar_contraseña", { delay: 100 });//de la misma manera como hicimos con el correo hacemos para la contraseña 
+    await page.type("#session_password", "ingresar_contraseña", { delay: 100 });//de la misma manera como hicimos con el correo hacemos para la contraseña
     await page.click(".sign-in-form__submit-button");//aqui mandamos una funcion de clic al boton ingresar o tambien se le puede mandar una funcion de enter funciona de igual manera
     await page.waitForSelector("#global-nav-typeahead > input");//aqui esperemos que cargue la pagina principal no toda solamente aremos uso de su buscador pero para esto necesitamos que su buscador este desplegado encaso no lo este no funcionara el programa
-    await page.type("#global-nav-typeahead > input", "developer", { delay: 300 });//una vez ahya cargado solamente mandamos lo que queremos buscar en este caso developer se puede cambiar en este lugar 
+    await page.type("#global-nav-typeahead > input", "developer", { delay: 300 });//una vez ahya cargado solamente mandamos lo que queremos buscar en este caso developer se puede cambiar en este lugar
     page.keyboard.press('Enter'); //esta es la funcion de enter para mandar la busqueda
     await page.waitForSelector("#search-reusables__filters-bar > ul > li:nth-child(2) > button");//cuando hacemos una busqueda por defecto te viene en la pestaña de empleos es por esto que simulo un clic en developer pero antes de hacer clic tengo que esperar a que este boton se cargue
     await page.click('#search-reusables__filters-bar > ul > li:nth-child(2) > button');//se simula el clic para poder ingresar a la seccion de personas
@@ -48,23 +48,23 @@ const puppeteer = require('puppeteer');//importamos puppeteer
     const informacion = []
     for (let enlace of enlaces) {
         await page.goto(enlace);//mandamos un enlace por iteracion
-        await page.waitForSelector('#experience')//en este caso esperamos a que cargue la experiencia si no, nos funcionara 
+        await page.waitForSelector('#experience')//en este caso esperamos a que cargue la experiencia si no, nos funcionara
         const info = await page.evaluate(() => {
             const tmp = {};
             tmp.name = document.querySelector('h1').innerText;
             tmp.education = document.querySelector('#education ~ .pvs-list__outer-container > ul > li').innerText;//se extrae el texto de cada educacion
-            tmp.experience =  document.querySelector('#experience ~ .pvs-list__outer-container > ul > li').innerText;//se extrae la informacion de experiencia 
+            tmp.experience =  document.querySelector('#experience ~ .pvs-list__outer-container > ul > li').innerText;//se extrae la informacion de experiencia
             return tmp;
         });
-        informacion.push(info); //almacenamos toda la informacion en el array creado anteriormente 
+        informacion.push(info); //almacenamos toda la informacion en el array creado anteriormente
     }
     console.log(informacion);
     //localStorage.setItem("scarping",informacion);
     await browser.close();
 
     //para poder extraer la informacion  de los siguiente perfiles pienso que en la parte de links deberia de simular mas cliks en cada boton de la paginacion y extraer todos los links solo se cambiaria en ese lugar
-    //por que despues los links quedarian almacenamos en el array links y con la siguiente funcion se puede entrar a todos los urls extraidos y escrapear todo  
+    //por que despues los links quedarian almacenamos en el array links y con la siguiente funcion se puede entrar a todos los urls extraidos y escrapear todo
 })();
 //asi es como funciona borrare mi correo y mi contraseña para subirlo al github
 
-//se scrapeo todos los perfiles de los 10 perfiles se scrapeo los 10 ... gracias 
+//se scrapeo todos los perfiles de los 10 perfiles se scrapeo los 10 ... gracias
